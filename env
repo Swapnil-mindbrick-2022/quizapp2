@@ -1,0 +1,3 @@
+DB= mongodb+srv://shu810:shu810@cluster0.uub44.mongodb.net/quizdb?retryWrites=true&w=majority
+
+PORT = 3002

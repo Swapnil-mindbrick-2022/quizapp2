@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>StartTest</title>
+</head>
+<style>
+.header{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    box-shadow: 10px 5px 5px red;
+    background-color:white;
+    
+}
+.logo{
+    width: 90px;
+}
+.nav-items > ul{
+    display: flex;
+}
+.nav-items > ul > li{
+    list-style: none;
+    padding: 10px;
+    margin: 10px;
+}
+
+
+    #container{
+        display: flex;
+        justify-content: center;
+    }
+    .btn {
+  background-color: #0d0d0d; /* Default button color */
+  color: #fff; /* Default button text color */
+  border: none; /* Remove button border */
+  padding: 10px 20px; /* Set button padding */
+  font-size: 16px; /* Set button font size */
+  border-radius: 5px; /* Round button edges */
+}
+
+.btn:hover {
+  background-color: #ff0000; /* Change button color on hover */
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 10px #ff0000; /* Add glowing effect on hover */
+}
+
+</style>
+<body>
+    <div class='header'>
+        <div class='logo-container'>
+            <img class='logo' src="../public//mindbrinklogo.jpg"/>
+        </div>
+        <h2>Campus Recruitment Aptitude Test - 2023</h2>
+        <div class='nav-items'>
+            <ul>
+            <!-- <li>Home</li>
+            <li>About us</li>
+            <li>ContactUs</li>
+            <li>Cart</li> -->
+            </ul>
+        </div>
+    </div>
+    <div id="container">
+        <div id="instructions" style="box-shadow: 10px 5px 5px black;   border:  1px solid brown; width: 700px; margin:40px; padding: 30px;">
+            <h4>Read The Instructions Carefully </h4>
+            <ul>
+                <li>The duration of the test is 60 mins</li>
+                <li>Question once attempted cannot be revisited or attempted again</li>
+                <li>The first five question carries 4 marks each and the remaining ones carries 2 marks</li>
+                <li>Rough sheet will be provided to do the calculations. Candidates must write their name and roll number on the rough sheet.</li>
+                <!-- <li>Each question carries 2 marks</li> -->
+                <li>Candidates are not allowed to use calculator or mobiles or any electronic device</li>
+                <li>Until instructed candidates are not allowed to start the test</li>
+                <li>The student is forbidden to TALK / GESTURE inside the examination hall.</li>
+                <li>Candidate will be asked to leave the exam anytime for any misconduct, Unfair Means, cheating, possession of unauthorized materials
+                 or ignoring the instructions given by supervisors/ invigilator.</li>
+            </ul>
+           
+                 
+                 <form action="/starttest" method="post">
+                    <button type="submit" class="btn btn-dark glow-effect">Click Here To Begin Your Test..</button>
+
+                </form>
+
+        </div>
+
+            <div style="margin-right: 100px;">
+                
+            </div>
+      
+            
+    
+        
+    </div>
+   
+</body>
+</html>

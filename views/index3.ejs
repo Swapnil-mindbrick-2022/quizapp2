@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    #quiz-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.option {
+  display: block;
+  margin: 10px 0;
+}
+
+
+
+    .quiz-question {
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+    .quiz-option {
+      margin-bottom: 0.5rem;
+    }
+    .quiz-option input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+    /* CSS for pagination buttons */
+#pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#pagination-container button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+#pagination-container button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+</style>
+<body>
+    <section>
+        <button id="startBtn">Click Here To Start Your Test</button>
+    </section>
+    <div id="quiz-container">
+        <h2>Welcome..</h2>
+    </div>
+    <div id="pagination-container">
+
+       
+    </div>
+        <button id="submit-btn"  style="background-color: yellowgreen; margin-left: 730px; display: none; margin-top: 40px;">submit</button>
+</body>
+<script>
+    const quizContainer = document.getElementById('quiz-container');
+    let selectedOptions= {}
+    const questionsPerPage = 3;
+    let currentPage = 1;
+    let totalMarks = 0;
+    axios.get('/getquestions').then((res)=>{
+    const questions = res.data
+    function showQuestions(currentPage) {
+      const startIndex = (currentPage - 1) * questionsPerPage;
+      const endIndex = startIndex + questionsPerPage;
+      const pageQuestions = questions.slice(startIndex, endIndex);
+      let html = '';
+      pageQuestions.forEach(question => {
+        html += `
+          <div class="quiz-question">
+            <p>${question.question}</p>
+          </div>
+        `;
+
+        //this variable will store that question's id...
+        let selectedOption = selectedOptions[question._id];
+          
+        // This will generate options for the question---
+        for (let i = 0; i < question.options.length; i++) { 
+          const option = question.options[i];
+          const questionId = question._id;
+          console.log(questionId)
+          console.log(selectedOptions[questionId])
+        //   console.log(selectedOptions[questionId])
+        
+          const isChecked = selectedOptions[questionId] === option; // check if the option was selected before
+          //line 103 --- if isChecked = true.. 'checked' else = empty..
+          html += `
+          <div class="quiz-option">
+            <input  type="radio" name="answer${question._id}" value="${option}" ${isChecked ? 'checked' : ''}>
+            <label for="answer${question._id}${option}">${option}</label>
+          </div>
+          `;
+        }
+      })
+      quizContainer.innerHTML = html; 
+    //   calculateMarks()
+}
+function calculateMarks() {
+    totalMarks = 0;
+    
+    for (let i = 0; i < questions.length; i++) {
+      const question = questions[i];
+      const questionId = question._id;
+      const selectedOption = selectedOptions[questionId];
+      
+      if (selectedOption === question.correctanswer) {
+        totalMarks++;
+      }
+    }
+
+    // const submitButton = document.getElementById('submit-button');
+    // submitButton.innerHTML = `Submit (${totalMarks}/${questions.length})`;
+    console.log(totalMarks)
+  }
+function handlePaginationClick(event) {
+  const page = parseInt(event.target.dataset.page);
+  currentPage = page;
+  const radioButtons = document.querySelectorAll('input[type="radio"]:checked'); //this saves the list of all checked radio buttons--
+    radioButtons.forEach((radioButton) => {
+      const questionId = radioButton.name.replace('answer', '');  //will get replaced with empty string--
+      const option = radioButton.value; //will save selected value..
+      selectedOptions[questionId] = option; // update selectedOptions with the new answers
+    });
+  showQuestions(currentPage);
+  renderPagination()
+}
+// function for rendering each page----
+function renderPagination() {
+   
+  const numPages = Math.ceil(questions.length / questionsPerPage);
+  console.log('pages',numPages)
+  let html = '';
+  for (let i = 1; i <= numPages; i++) {
+    html += `
+      <button data-page="${i}" ${currentPage === i ? 'disabled' : ''}>${i}</button>
+    `;
+  }
+  if (currentPage == numPages){
+    calculateMarks()
+    const submitBtn = document.getElementById('submit-btn')
+    if (submitBtn.style.display == "none"){
+        submitBtn.style.display = "block"
+  }
+  }else{
+    const submitBtn = document.getElementById('submit-btn')
+    submitBtn.style.display = "none"
+  }
+
+  const paginationContainer = document.getElementById('pagination-container');
+  paginationContainer.innerHTML = html;
+  const paginationButtons = paginationContainer.querySelectorAll('button');
+  paginationButtons.forEach(button => {
+    button.addEventListener('click', handlePaginationClick)
+});
+calculateMarks()
+}
+showQuestions(currentPage)
+renderPagination()
+const submitBtn = document.getElementById('submit-btn')
+
+submitBtn.addEventListener('click',()=>{
+    calculateMarks
+    const markObtained = totalMarks
+    const total = questions.length
+    console.log(`${markObtained}/ ${total}`)
+})
+
+})
+  </script>
+</html>
